@@ -34,11 +34,6 @@
 
 #include "n32g430.h"
 #include "n32g430_it.h"
-#include "pm25_usart.h"
-
-extern uint8_t RxBuffer1[32];
-extern __IO uint8_t RxCounter1;
-bool usart1_flag = false;
 
 /** Cortex-M4 Processor Exceptions Handlers **/
 

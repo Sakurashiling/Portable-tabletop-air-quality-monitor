@@ -31,6 +31,8 @@
         "xutility": "c",
         "myiic.h": "c",
         "sht20.h": "c",
-        "xtr1common": "c"
+        "xtr1common": "c",
+        "pm25_usart.h": "c",
+        "n32g430_flash.h": "c"
     }
 }

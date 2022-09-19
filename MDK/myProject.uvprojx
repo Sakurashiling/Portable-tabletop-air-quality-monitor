@@ -432,6 +432,11 @@
               <FileType>1</FileType>
               <FilePath>..\FWILB\src\n32g430_adc.c</FilePath>
             </File>
+            <File>
+              <FileName>n32g430_flash.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\FWILB\src\n32g430_flash.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -501,6 +506,11 @@
               <FileName>SGP30.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\USER\SGP30.c</FilePath>
+            </File>
+            <File>
+              <FileName>flash_user.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\USER\flash_user.c</FilePath>
             </File>
           </Files>
         </Group>

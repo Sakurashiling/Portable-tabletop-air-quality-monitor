@@ -11,8 +11,6 @@
 #include "n32g430_it.h"
 
 USART_InitType USART_InitStructure;
-uint8_t RxBuffer1[32];
-__IO uint8_t RxCounter1         = 0x00;
 
 void log_init(void)
 {

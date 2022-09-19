@@ -6,7 +6,7 @@
 #include "oledfont.h"
 
 uint8_t OLED_GRAM[128][8] = {0};
-
+extern uint8_t OLED_Brightness; //屏幕亮度(0-255)
 /**
  *\*\name   Out_Oled.
  *\*\fun    write data or command function.
@@ -52,23 +52,28 @@ void oled_init(void)
     Out_Oled(MOC_Command, 0xDA); //设置COM硬件引脚配置
     Out_Oled(MOC_Command, 0x12); //[5:4]配置
 
-    Out_Oled(MOC_Command, 0x81); //对比度设置
-    Out_Oled(MOC_Command, 0xEF); // 1~255;默认0X7F (亮度设置,越大越亮)
-    Out_Oled(MOC_Command, 0xD9); //设置预充电周期
-    Out_Oled(MOC_Command, 0xf1); //[3:0],PHASE 1;[7:4],PHASE 2;
-    Out_Oled(MOC_Command, 0xDB); //设置VCOMH 电压倍率
-    Out_Oled(MOC_Command, 0x30); //[6:4] 000,0.65*vcc;001,0.77*vcc;011,0.83*vcc;
+    Out_Oled(MOC_Command, 0x81);            //对比度设置
+    Out_Oled(MOC_Command, OLED_Brightness); // 1~255;默认0X7F (亮度设置,越大越亮)
+    Out_Oled(MOC_Command, 0xD9);            //设置预充电周期
+    Out_Oled(MOC_Command, 0xf1);            //[3:0],PHASE 1;[7:4],PHASE 2;
+    Out_Oled(MOC_Command, 0xDB);            //设置VCOMH 电压倍率
+    Out_Oled(MOC_Command, 0x30);            //[6:4] 000,0.65*vcc;001,0.77*vcc;011,0.83*vcc;
 
     Out_Oled(MOC_Command, 0xA4); //全局显示开启;bit0:1,开启;0,关闭;(白屏/黑屏)
     Out_Oled(MOC_Command, 0xA6); //设置显示方式;bit0:1,反相显示;0,正常显示
     Out_Oled(MOC_Command, 0xAF); //开启显示
 }
-void OLED_Brightness(int value)
+void OLED_SETBrightness(uint8_t value)
 {
-    u8 i;
-    for (i = 0; i < 8; i++)
+    if (value > 8)
     {
-        Out_Oled(0X80 + value, 0xEF); // 1~255;默认0X7F (亮度设置,越大越亮)
+        Out_Oled(MOC_Command, 0x81);  //对比度设置
+        Out_Oled(MOC_Command, value); // 1~255;默认0X7F (亮度设置,越大越亮)
+    }
+    else
+    {
+        Out_Oled(MOC_Command, 0x81); //对比度设置
+        Out_Oled(MOC_Command, 8);    // 1~255;默认0X7F (亮度设置,越大越亮)
     }
 }
 /**
@@ -177,14 +182,35 @@ void OLED_ShowCNChar(u8 x, u8 y, u8 chr, u8 size, u8 num, u8 mode)
     {
         if (size == 12)
         {
-            if (num == 1)
+            switch (num)
+            {
+            case 1:
                 temp = A1_1212[chr][t];
-            else if (num == 2)
+                break;
+            case 2:
                 temp = A2_1212[chr][t];
-            else if (num == 3)
+                break;
+            case 3:
                 temp = A3_1212[chr][t];
-            // else if (num == 4)
-            //     temp = A4_1212[chr][t];
+                break;
+            case 4:
+                temp = A4_1212[chr][t];
+                break;
+            case 5:
+                temp = A5_1212[chr][t];
+                break;
+            case 6:
+                temp = A6_1212[chr][t];
+                break;
+            case 7:
+                temp = A7_1212[chr][t];
+                break;
+            case 8:
+                temp = A8_1212[chr][t];
+                break;
+            default:
+                break;
+            }
         }
         else if (size == 16)
         {
@@ -197,6 +223,13 @@ void OLED_ShowCNChar(u8 x, u8 y, u8 chr, u8 size, u8 num, u8 mode)
                 temp = A1_2424[chr][t];
             // else if (num == 2)
             //     temp = A2_2424[chr][t];
+        }
+        else if (size == 32)
+        {
+            if (num == 1)
+                temp = A1_3232[chr][t];
+            // else if (num == 2)
+            //     temp = A2_4848[chr][t];
         }
         for (t1 = 0; t1 < 8; t1++)
         {

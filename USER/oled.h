@@ -19,7 +19,7 @@ void oled_init(void);	//call this function once
 void Out_Oled(uint8_t cmd,uint8_t data);
 void OLED_Clear(void)  ;
 void OLED_Refresh_Gram(void);
-void OLED_Brightness(int value);
+void OLED_SETBrightness(uint8_t value);
 void OLED_DrawPoint(u8 x,u8 y,u8 t);
 void OLED_ShowString(u8 x,u8 y,const u8 *p,u8 size);
 void OLED_ShowChar(u8 x,u8 y,u8 chr,u8 size,u8 mode);
